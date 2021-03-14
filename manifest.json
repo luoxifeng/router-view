@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "RouterView",
+  "version": "0.0.1",
+  "description": "子应用路由视图",
+  "icons": {
+    "16": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png"
+  },
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_title": "RouterView",
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/index.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "contextMenus", 
+    "tabs", 
+    "notifications", 
+    "webRequest", 
+    "webRequestBlocking",
+    "storage", 
+    "http://*/*",
+    "https://*/*"
+  ],
+  "homepage_url": "https://www.baidu.com",
+  "options_page": "html/options.html",
+  "options_ui": {
+    "page": "html/options.html",
+    "chrome_style": true
+  },
+  "omnibox": { "keyword": "go" },
+  "devtools_page": "html/devtools.html",
+  "web_accessible_resources": ["js/inject.js"]
+}
