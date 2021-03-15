@@ -20,7 +20,8 @@
     {
       "matches": ["<all_urls>"],
       "js": ["js/index.js"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
   "permissions": [
@@ -41,5 +42,6 @@
   },
   "omnibox": { "keyword": "go" },
   "devtools_page": "html/devtools.html",
-  "web_accessible_resources": ["js/inject.js"]
+  "web_accessible_resources": ["js/inject.js"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
 }

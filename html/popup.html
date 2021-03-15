@@ -7,15 +7,56 @@
       content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"
     />
     <title></title>
+    <style>
+      .app {
+        width: 300px;
+      }
+
+      .list {
+        height: 400px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+
+      ul {
+        padding: 0 10px;
+        margin: 0;
+      }
+
+      li {
+        font-size: 14px;
+        line-height: 24px;
+        list-style: none;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      a {
+        color: #337ab7;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    </style>
+
   </head>
   <body>
-    <section id="app">
-      <header>Router View</header>
-      <section>
-        
-        <hr>
+    <section id="app" class="app">
+      <header>
+        <span class='title'>Router View</span>
+        <a @click='login' style="float: right;">login</a>
+      </header>
+      <hr>
+      <section class="list">
+        <ul>
+          <li v-for="(t, i) in routers" @click='switchRouter(t.name)'>
+            <a>{{t.title}}</a>
+          </li>
+        </ul>
       </section>
     </section>
+    <script src="../js/vue.min.js"></script>
     <script src="../js/popup.js"></script>
   </body>
 </html>
