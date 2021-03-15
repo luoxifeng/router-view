@@ -48,7 +48,7 @@ window.addEventListener("message", function(e) {
   if (e.data.type === 'ROUTER_VIEW_DEVTOOL_REGISTER') {
     chrome.runtime.sendMessage({
       ...e.data,
-      type: 'ROUTER_VIEW_DEVTOOL_INIT_OPTIONS',
+      type: 'ROUTER_VIEW_DEVTOOL_INIT',
     });
   }
 }, false);

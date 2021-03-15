@@ -12,11 +12,29 @@ function getCurrentTabId(callback) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   
-  if (request.type === 'ROUTER_VIEW_DEVTOOL_INIT_OPTIONS') {
-    getCurrentTabId(id => {
-      console.log(id);
-      __OPTIONS__[id] = request.payload;
+  if (request.type === 'ROUTER_VIEW_DEVTOOL_INIT') {
+
+    // 设置配置
+    __OPTIONS__[sender.tab.id] = request.payload;
+
+    /**
+     * 更改icon
+     */
+    chrome.browserAction.setIcon({
+      tabId: sender.tab.id,
+      path: {
+        16: `icons/enabled.png`,
+        48: `icons/enabled.png`,
+        128: `icons/enabled.png`
+      }
     })
-    sendResponse('ROUTER_VIEW_DEVTOOL_INIT_OPTIONS: COMPLETE');
+
+    // 更改popup
+    chrome.browserAction.setPopup({
+      tabId: sender.tab.id,
+      popup: `popups/enabled.html`
+    })
+
+    sendResponse('ROUTER_VIEW_DEVTOOL_INIT: COMPLETE');
   }
 });
