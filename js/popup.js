@@ -42,6 +42,10 @@ getCurrentTabId(id => {
           this.current = request.payload;
         }
       });
+    },
+    mounted() {
+      const active = document.querySelector('.active');
+      active && active.scrollIntoViewIfNeeded()
     }
   })
 })
