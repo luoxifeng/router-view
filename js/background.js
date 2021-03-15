@@ -37,4 +37,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     sendResponse('ROUTER_VIEW_DEVTOOL_INIT: COMPLETE');
   }
+
+  if (request.type === 'ROUTER_VIEW_DEVTOOL_CURRENT_ROUTE') {
+    __OPTIONS__[sender.tab.id].current = request.payload;
+  }
 });

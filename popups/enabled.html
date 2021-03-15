@@ -25,7 +25,7 @@
 
       li {
         font-size: 14px;
-        line-height: 24px;
+        line-height: 28px;
         list-style: none;
       }
 
@@ -34,9 +34,15 @@
       }
 
       a {
-        color: #337ab7;
-        text-decoration: underline;
+        color:rgb(45, 45, 45);
+        /* text-decoration: underline; */
         cursor: pointer;
+      }
+
+      li.disabled a {
+        color: #337ab7;
+        cursor: not-allowed;
+        /* text-decoration: none; */
       }
     </style>
 
@@ -50,8 +56,8 @@
       <hr>
       <section class="list">
         <ul>
-          <li v-for="(t, i) in routers" @click='switchRouter(t.name)'>
-            <a>{{t.title}}</a>
+          <li v-for="(t, i) in routers" @click='switchRouter(t.name)' :class="{ disabled: t.name === current }">
+            <a :alt="t.name">{{t.title}}</a>
           </li>
         </ul>
       </section>

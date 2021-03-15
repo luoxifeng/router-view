@@ -7,7 +7,6 @@ function getCurrentTabId(callback) {
 
 getCurrentTabId(id => {
   const bg = chrome.extension.getBackgroundPage();
-  debugger
 
   const app = new Vue({
     el: '#app',
@@ -16,6 +15,7 @@ getCurrentTabId(id => {
       return {
         loginUrl: options.loginUrl || '',
         routers: options.routers || [],
+        current: options.current || '',
       };
     },
     methods: {
@@ -23,6 +23,7 @@ getCurrentTabId(id => {
         window.open(this.loginUrl);
       },
       switchRouter(name) {
+        if (this.current === name) return;
         chrome.tabs.sendMessage(
           id,
           {
@@ -34,7 +35,13 @@ getCurrentTabId(id => {
           }
         );
       }
+    },
+    created() {
+      chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        if (request.type === 'ROUTER_VIEW_DEVTOOL_CURRENT_ROUTE') {
+          this.current = request.payload;
+        }
+      });
     }
   })
-
 })

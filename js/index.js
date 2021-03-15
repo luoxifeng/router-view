@@ -11,12 +11,21 @@ function inject(target) {
         entry: t.meta ? t.meta.isEntry : false
       };
     }).filter(t => t.entry);
+    // debugger
+
+    app.$router.afterEach((to, from) => {
+      target.postMessage({
+        type: 'ROUTER_VIEW_DEVTOOL_CURRENT_ROUTE',
+        payload: to.name
+      }, '*')
+    })
     
     target.postMessage({
       type: 'ROUTER_VIEW_DEVTOOL_REGISTER',
       payload: {
         routers: routers,
         loginUrl: opts.loginUrl,
+        current: app.$router.currentRoute.name
       }
     }, '*')
 
@@ -28,10 +37,12 @@ function inject(target) {
           return;
         }
         app.$router.push(e.data.payload, () => {
-          console.log('跳转成功');
+          console.log('ROUTER_VIEW_DEVTOOL_跳转成功');
         });
       }
     })
+
+
   }
   target.__ROUTER_VIEW_DEVTOOL__ = register;
 }
@@ -45,11 +56,16 @@ function injectScript() {
 }
 
 window.addEventListener("message", function(e) {
+  // debugger
   if (e.data.type === 'ROUTER_VIEW_DEVTOOL_REGISTER') {
     chrome.runtime.sendMessage({
       ...e.data,
       type: 'ROUTER_VIEW_DEVTOOL_INIT',
     });
+  }
+
+  if (e.data.type === 'ROUTER_VIEW_DEVTOOL_CURRENT_ROUTE') {
+    chrome.runtime.sendMessage(e.data);
   }
 }, false);
 
